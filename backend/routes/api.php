@@ -5,6 +5,8 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Api\AuthController;
+
 
 Route::apiResource('vendors', VendorController::class);
 Route::apiResource('quotations', QuotationController::class);
@@ -18,3 +20,7 @@ Route::delete('quotes/{id}', [QuoteController::class, 'destroy']);
 Route::patch('quotations/{id}/status', [QuotationController::class, 'updateStatus']);
 
 Route::get('dashboard', [DashboardController::class, 'index']);
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
