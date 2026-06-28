@@ -17,11 +17,13 @@ class QuotationController extends Controller
             $query->where('status', $request->status);
         }
 
-        if ($request->has('search')) {
-            $search = $request->search;
-            $query->where('title', 'LIKE', "%{$search}%")
-                  ->orWhere('description', 'LIKE', "%{$search}%");
-        }
+        if ($request->filled('search')) {
+          
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'LIKE', "%{$search}%")
+              ->orWhere('description', 'LIKE', "%{$search}%");
+        });
+    }
 
         $quotations = $query->with('quotes.vendor')->latest()->paginate(10);
 

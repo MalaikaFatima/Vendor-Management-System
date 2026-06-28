@@ -1,38 +1,47 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Vendor;
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 
+
 class VendorController extends Controller
 {
     public function index(Request $request): JsonResponse
-    {
-        $query = Vendor::query();
+{
+    $query = Vendor::query();
 
-        if ($request->has('search')) {
-            $search = $request->search;
-            $query->where('vendor_name', 'LIKE', "%{$search}%")
-                  ->orWhere('company_name', 'LIKE', "%{$search}%")
-                  ->orWhere('email', 'LIKE', "%{$search}%");
-        }
+    
+    if ($request->filled('search')) {
 
-        if ($request->has('status') && $request->status != 'all') {
-            $query->where('status', $request->status);
-        }
+        $search = $request->search;
 
-        $vendors = $query->latest()->paginate(10);
+        $query->where(function ($q) use ($search) {
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Vendors fetched successfully',
-            'data' => $vendors
-        ]);
+            $q->where('vendor_name', 'LIKE', "%{$search}%")
+              ->orWhere('company_name', 'LIKE', "%{$search}%")
+              ->orWhere('email', 'LIKE', "%{$search}%");
+
+        });
     }
+
+    if ($request->filled('status') && $request->status !== 'all') {
+
+        $query->where('status', $request->status);
+
+    }
+
+    $vendors = $query->latest()->paginate(10);
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Vendors fetched successfully',
+        'data' => $vendors
+    ]);
+}
 
     public function store(Request $request): JsonResponse
     {
@@ -125,7 +134,9 @@ class VendorController extends Controller
                 'message' => 'Vendor not found'
             ], 404);
         }
-
+if($vendor->user_id){
+    User::where('id', $vendor->user_id)->delete();
+}
         $vendor->delete();
 
         return response()->json([
