@@ -72,9 +72,9 @@ function Navbar({ toggleSidebar }) {
             className="flex items-center gap-3 rounded-xl p-2 transition hover:bg-gray-100"
           >
 
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 font-semibold text-white">
-              {user?.name?.charAt(0).toUpperCase()}
-            </div>
+<div className="flex h-10 w-10 items-center justify-center rounded-full border border-blue-200 bg-blue-50 font-semibold text-blue-700">
+  {user?.name?.charAt(0).toUpperCase()}
+</div>
 
             <div className="hidden text-left sm:block">
 

@@ -5,6 +5,7 @@ import {
   DocumentTextIcon,
   ScaleIcon,
   ClockIcon,
+  Cog6ToothIcon
 } from "@heroicons/react/24/outline";
 
 const menuItems = [
@@ -43,9 +44,9 @@ function Sidebar({ isOpen }) {
       }`}
     >
       <div className="flex h-16 items-center border-b border-gray-200 px-5">
-        {/* <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-lg font-bold text-white">
-          V
-        </div> */}
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-200 bg-blue-50 font-bold text-blue-700">
+  V
+</div>
 
         {isOpen && (
           <div className="ml-3">
@@ -71,8 +72,8 @@ function Sidebar({ isOpen }) {
               className={({ isActive }) =>
                 `mb-2 flex items-center rounded-xl px-4 py-3 transition-all duration-200 ${
                   isActive
-                    ? "bg-blue-600 text-white"
-                    : "text-gray-700 hover:bg-gray-100"
+                  ? "rounded-lg border border-blue-200 bg-blue-50 text-blue-700"
+                  : "text-gray-700 hover:bg-gray-100"
                 }`
               }
             >
@@ -90,21 +91,13 @@ function Sidebar({ isOpen }) {
 
       <div className="border-t border-gray-200 p-4">
         <div className="flex items-center">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 font-semibold text-white">
-            M
-          </div>
+        <div className="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-600">
+  <Cog6ToothIcon className="h-6 w-6" />
+  {isOpen && <span>Settings</span>}
+</div>
 
-          {isOpen && (
-            <div className="ml-3">
-              <p className="text-sm font-semibold text-gray-900">
-                Malaika
-              </p>
-
-              <p className="text-xs text-gray-500">
-                Administrator
-              </p>
-            </div>
-          )}
+    
+          
         </div>
       </div>
     </aside>
