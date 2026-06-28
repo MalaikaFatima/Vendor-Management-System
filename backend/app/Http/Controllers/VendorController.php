@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vendor;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
@@ -130,6 +131,59 @@ class VendorController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Vendor deleted successfully'
+        ]);
+    }
+
+    public function pendingVendors(): JsonResponse
+    {
+        $vendors = Vendor::where('status', 'pending')->get();
+
+        return response()->json([
+            'status' => true,
+            'data' => $vendors
+        ]);
+    }
+    public function approveVendor(string $id): JsonResponse
+    {
+        $vendor = Vendor::find($id);
+
+        if (!$vendor) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Vendor not found'
+            ], 404);
+        }
+
+        $vendor->status = 'active';
+        $vendor->save();
+
+        User::where('id', $vendor->user_id)->update(['status' => 'active']);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Vendor approved successfully',
+            'data' => $vendor
+        ]);
+    }
+    public function rejectVendor(string $id): JsonResponse
+    {
+        $vendor = Vendor::find($id);
+
+        if (!$vendor) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Vendor not found'
+            ], 404);
+        }
+
+        $vendor->status = 'rejected';
+        $vendor->save();
+User::where('id', $vendor->user_id)->update(['status' => 'rejected']);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Vendor rejected successfully',
+            'data' => $vendor
         ]);
     }
 }

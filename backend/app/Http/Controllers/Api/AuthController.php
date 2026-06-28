@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Vendor;
 
 
 class AuthController extends Controller
@@ -15,18 +16,31 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'company_name'=> 'required|string|max:255',
             'email' => 'required|email|unique:users',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
             'password' => 'required|string|min:6|confirmed',
         ]);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'vendor',
+            'status' => 'pending',
+        ]);
+        Vendor::create([
+            'user_id' => $user->id,
+            'vendor_name' => $request->name,
+            'company_name' => $request->company_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'status' => 'pending',
         ]);
 
         return response()->json([
-            'message' => 'register successfully',
+            'message' => 'register successfully , wait for approval from admin',
             'user' => $user
         ], 201);
     }
@@ -43,6 +57,11 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Invalid email or password'
             ], 401);
+        }
+        if($user->role== 'vendor' && $user->status != 'active'){
+            return response()->json([
+                'message' => 'Your account is not approved now. wait for admin approval.'
+            ], 403);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;

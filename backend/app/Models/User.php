@@ -23,7 +23,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'status',
     ];
+
+    public function vendor()
+    {
+        return $this->hasOne(Vendor::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

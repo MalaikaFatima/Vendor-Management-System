@@ -9,6 +9,12 @@ use App\Http\Controllers\Api\AuthController;
 
 
 Route::apiResource('vendors', VendorController::class);
+Route::get('vendors/pending', [VendorController::class, 'pendingVendors']);
+
+Route::patch('vendors/{id}/approve', [VendorController::class, 'approveVendor']);
+
+Route::patch('vendors/{id}/reject', [VendorController::class, 'rejectVendor']);
+
 Route::apiResource('quotations', QuotationController::class);
 
 Route::post('quotes', [QuoteController::class, 'store']);

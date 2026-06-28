@@ -8,7 +8,10 @@ function Register() {
 
   const [formData, setFormData] = useState({
     name: "",
+    company_name: "",
     email: "",
+    phone: "",
+    address: "",
     password: "",
     password_confirmation: "",
   });
@@ -27,11 +30,14 @@ function Register() {
 
     if (
       !formData.name.trim() ||
+      !formData.company_name.trim() ||
       !formData.email.trim() ||
+      !formData.phone.trim() ||
+      !formData.address.trim() ||
       !formData.password.trim() ||
       !formData.password_confirmation.trim()
     ) {
-      toast.error("Please fill in all fields");
+      toast.error("Please fill  all fields");
       return;
     }
 
@@ -62,7 +68,7 @@ function Register() {
       <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
 
         <div className="mb-8 text-center">
-          
+
 
           <h1 className="text-3xl font-bold text-gray-900">
             Create Account
@@ -86,6 +92,20 @@ function Register() {
               className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600"
             />
           </div>
+          <div>
+            <label className="mb-2 block text-sm font-medium text-gray-700">
+              Company Name
+            </label>
+            <input
+              type="text"
+              name="company_name"
+              value={formData.company_name}
+              onChange={handleChange}
+              placeholder="Enter  company name"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600"
+
+            />
+          </div>
 
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700">
@@ -101,7 +121,28 @@ function Register() {
               className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600"
             />
           </div>
+          <div>
 
+            <label className="mb-2 block text-sm font-medium text-gray-700">
+              Phone Number
+            </label>
+
+            <input
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Enter phone number"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-medium text-gray-700">
+              Company_address</label>
+            <textarea name="address" value={formData.address} onChange={handleChange} placeholder="Enter company address" className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600
+  " id=""></textarea>
+          </div>
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700">
               Password

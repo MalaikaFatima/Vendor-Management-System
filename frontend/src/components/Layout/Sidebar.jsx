@@ -43,9 +43,9 @@ function Sidebar({ isOpen }) {
       }`}
     >
       <div className="flex h-16 items-center border-b border-gray-200 px-5">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-lg font-bold text-white">
+        {/* <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-lg font-bold text-white">
           V
-        </div>
+        </div> */}
 
         {isOpen && (
           <div className="ml-3">
