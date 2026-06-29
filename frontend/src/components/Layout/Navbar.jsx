@@ -96,19 +96,6 @@ function Navbar({ toggleSidebar }) {
 
             <div className="absolute right-0 mt-3 w-52 rounded-xl border border-gray-200 bg-white py-2 shadow-lg">
 
-              <button
-                className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
-              >
-                Profile
-              </button>
-
-              <button
-                className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
-              >
-                Settings
-              </button>
-
-              <hr className="my-2" />
 
               <button
                 onClick={handleLogout}
