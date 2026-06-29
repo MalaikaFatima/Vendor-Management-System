@@ -10,7 +10,8 @@ import Comparison from "./pages/Comparison";
 import History from "./pages/History";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-
+import QuotationQuotes from "./pages/QuotationQuotes";
+import VendorDashboard from "./pages/VendorDashboard";
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +28,7 @@ function App() {
 
             <Route path="/" element={<Dashboard />} />
 
+<Route path="/vendor_dashboard" element={<VendorDashboard/>}/>
             <Route path="/vendors" element={<Vendors />} />
 
             <Route path="/quotations" element={<Quotations />} />
@@ -34,6 +36,9 @@ function App() {
             <Route path="/comparison" element={<Comparison />} />
 
             <Route path="/history" element={<History />} />
+
+            <Route path="/quotations/:id/quotes" element={<QuotationQuotes />} />
+
 
           </Route>
 

@@ -40,8 +40,8 @@ function Login() {
       );
 
       toast.success(response.data.message);
+if(response.data.user.role === "admin"){navigate("/");}else{navigate("/vendor_dashboard");}
 
-      navigate("/");
     } catch (error) {
       toast.error(
         error.response?.data?.message || "Login failed"

@@ -15,7 +15,6 @@ class QuoteController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'quotation_id' => 'required|exists:quotations,id',
-            'vendor_id' => 'required|exists:vendors,id',
             'amount' => 'required|numeric|min:0',
             'delivery_time' => 'nullable|string|max:255',
             'notes' => 'nullable|string',
@@ -29,8 +28,13 @@ class QuoteController extends Controller
             ], 422);
         }
 
+$vendor= $request->user()->vendor;
+if(!$vendor)
+{
+    return response()->json(['status'=>false,'message'=>'Vendor not found'],404);
+}
         $existingQuote = Quote::where('quotation_id', $request->quotation_id)
-                              ->where('vendor_id', $request->vendor_id)
+                              ->where('vendor_id', $vendor->id)
                               ->first();
 
         if ($existingQuote) {
@@ -42,7 +46,7 @@ class QuoteController extends Controller
 
         $quote = Quote::create([
             'quotation_id' => $request->quotation_id,
-            'vendor_id' => $request->vendor_id,
+            'vendor_id' => $vendor->id,
             'amount' => $request->amount,
             'delivery_time' => $request->delivery_time,
             'notes' => $request->notes,

@@ -18,7 +18,7 @@ class QuotationController extends Controller
         }
 
         if ($request->filled('search')) {
-          
+          $search = $request->input('search');
         $query->where(function ($q) use ($search) {
             $q->where('title', 'LIKE', "%{$search}%")
               ->orWhere('description', 'LIKE', "%{$search}%");

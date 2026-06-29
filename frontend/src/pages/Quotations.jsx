@@ -1,7 +1,7 @@
 import { useEffect,useState } from "react";
 import api from "../services/api";
 import toast from "react-hot-toast";
-
+import{ useNavigate } from "react-router-dom";
 
 function Quotations() {
 const[quotations,setQuotations] = useState([]);
@@ -14,6 +14,7 @@ const[formData,setFormData] = useState({
   title: "",
   description : "", 
 });
+const navigate = useNavigate();
 
 
 const getQuotations = async () => {
@@ -69,7 +70,7 @@ const handleEdit = (quotation) => {
   setFormData({
     title: quotation.title,
     description: quotation.description,
-  });showForm(false);
+  });setShowForm(false);
 
 };
 
@@ -300,6 +301,9 @@ Cancel
    
     <td className="border p-3">
     <div className="flex gap-2 flex-wrap">
+    <button onClick={()=> navigate(`/quotations/${quotation.id}/quotes`)}
+        className="rounded-lg border border-purple-200 bg-white px-3 py-2 text-sm font-medium text-purple-700 hover:bg-purple-50">View Quotes</button>
+
       <button
       onClick={() => handleEdit(quotation)}
 
@@ -311,6 +315,8 @@ Cancel
       className="rounded-lg border border-red-200 bg-white px-3 py-2 text-sm font-medium text-red-700 hover:bg-red-50">
         Delete
       </button>
+
+
       </div>
     </td>
     

@@ -16,14 +16,19 @@ Route::patch('vendors/{id}/approve', [VendorController::class, 'approveVendor'])
 Route::patch('vendors/{id}/reject', [VendorController::class, 'rejectVendor']);
 
 Route::apiResource('quotations', QuotationController::class);
+Route::middleware('auth:sanctum')->group(function () {
 
-Route::post('quotes', [QuoteController::class, 'store']);
+    Route::post('quotes', [QuoteController::class, 'store']);
+
+});
 Route::get('quotations/{id}/quotes', [QuoteController::class, 'getQuotesByQuotation']);
 Route::get('quotations/{id}/compare', [QuoteController::class, 'compareQuotes']);
 Route::patch('quotes/{id}/status', [QuoteController::class, 'updateStatus']);
 Route::delete('quotes/{id}', [QuoteController::class, 'destroy']);
 
 Route::patch('quotations/{id}/status', [QuotationController::class, 'updateStatus']);
+
+
 
 Route::get('dashboard', [DashboardController::class, 'index']);
 
