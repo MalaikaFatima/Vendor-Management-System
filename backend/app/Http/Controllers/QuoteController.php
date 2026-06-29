@@ -172,4 +172,13 @@ if(!$vendor)
             'message' => 'Quote deleted successfully'
         ]);
     }
+
+    public function history():JsonResponse{
+        $history = Quote::with(['quotation','vendor'])->latest()->get();
+    return response()->json([
+        'status' => true,
+        'message' => 'history fetched successfully',
+        'data' => $history
+    ]);
+    }
 }

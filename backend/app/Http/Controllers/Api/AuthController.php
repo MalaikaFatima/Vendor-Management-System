@@ -81,4 +81,12 @@ class AuthController extends Controller
             'message' => 'Logout '
         ]);
     }
+
+    public function profile(Request $request){
+        $user = $request->user()->load('vendor');
+        return response()->json([
+            'status'=>true,
+            'data'=>$user
+        ]);
+    }
 }

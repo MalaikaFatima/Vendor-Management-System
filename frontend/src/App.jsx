@@ -12,6 +12,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import QuotationQuotes from "./pages/QuotationQuotes";
 import VendorDashboard from "./pages/VendorDashboard";
+
+import Profile from "./pages/Profile";
 function App() {
   return (
     <BrowserRouter>
@@ -40,6 +42,7 @@ function App() {
             <Route path="/quotations/:id/quotes" element={<QuotationQuotes />} />
 
 
+            <Route path="/profile" element={<Profile />} />
           </Route>
 
         </Route>

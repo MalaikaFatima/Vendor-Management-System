@@ -25,8 +25,20 @@ class QuotationController extends Controller
         });
     }
 
-        $quotations = $query->with('quotes.vendor')->latest()->paginate(10);
+    $user = auth()->user();
 
+$quotations = $query
+    ->with([
+        'quotes' => function ($q) use ($user) {
+            if ($user && $user->role === 'vendor') {
+                $q->where('vendor_id', $user->vendor->id);
+            }
+
+            $q->with('vendor');
+        }
+    ])
+    ->latest()
+    ->paginate(10);
         return response()->json([
             'status' => true,
             'message' => 'Quotations fetched successfully',

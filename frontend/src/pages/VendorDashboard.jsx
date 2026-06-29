@@ -152,49 +152,62 @@ function VendorDashboard() {
 
                 <tbody>
 
-                    {quotations.map((quotation) => (
+                    {quotations.map((quotation) => {
+                        const quote = quotation.quotes[0];
 
-                        <tr key={quotation.id}>
-                            <td className="border p-3">
-                                {quotation.title}
-                            </td>
+                        return (
+                            <tr key={quotation.id}>
+                                <td className="border p-3">
+                                    {quotation.title}
+                                </td>
 
-                            <td className="border p-3">
-                                {quotation.description}
-                            </td>
+                                <td className="border p-3">
+                                    {quotation.description}
+                                </td>
 
-                            <td className="border p-3">
-                                <span
-                                    className={`rounded-full px-3 py-1 text-sm font-medium ${quotation.status === "active"
-                                        ? "bg-green-100 text-green-700"
-                                        : quotation.status === "pending"
-                                            ? "bg-yellow-100 text-yellow-700"
-                                            : "bg-red-100 text-red-700"
-                                        }`}
-                                >
-                                    {quotation.status}
-                                </span>
-                            </td>
+                                <td className="border p-3">
+                                    <span
+                                        className={`rounded-full px-3 py-1 text-sm font-medium ${!quote
+                                            ? "bg-gray-100 text-gray-700"
+                                            : quote.status === "approved"
+                                                ? "bg-green-100 text-green-700"
+                                                : quote.status === "pending"
+                                                    ? "bg-yellow-100 text-yellow-700"
+                                                    : "bg-red-100 text-red-700"
+                                            }`}
+                                    >
+                                        {!quote ? "Not Submitted" : quote.status}
+                                    </span>
+                                </td>
 
-                            <td className="border p-3">
+                                <td className="border p-3">
 
-                                <button onClick={() => {
+                                    {!quote ? (
 
-                                    setQuotationId(quotation.id);
+                                        <button
+                                            onClick={() => {
+                                                setQuotationId(quotation.id);
+                                                setShowForm(true);
+                                            }}
+                                            className="rounded-lg border border-blue-200 px-3 py-2 text-blue-700"
+                                        >
+                                            Submit Quote
+                                        </button>
 
-                                    setShowForm(true);
+                                    ) : (
 
-                                }}
-                                    className="rounded-lg border border-blue-200 px-3 py-2 text-blue-700"
-                                >
-                                    Submit Quote
-                                </button>
+                                        <span className="font-medium text-green-600">
+                                            Quote Submitted
+                                        </span>
 
-                            </td>
+                                    )}
 
-                        </tr>
+                                </td>
 
-                    ))}
+                            </tr>
+
+                        );
+                    })}
 
                 </tbody>
 
@@ -202,6 +215,5 @@ function VendorDashboard() {
 
         </div>
     );
-}
-
+};
 export default VendorDashboard;

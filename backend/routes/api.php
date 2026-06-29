@@ -35,3 +35,7 @@ Route::get('dashboard', [DashboardController::class, 'index']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+Route::get('history',[QuoteController::class,'history']);
+
+Route::middleware('auth:sanctum')->get('/profile', [AuthController::class, 'profile']);
